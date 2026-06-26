@@ -2,16 +2,18 @@ import java.util.HashMap;
 
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        int n = nums.length;
-        int count = 0;
-        for(int i=0; i<n; i++){
-            int runningSum = nums[i];
-            if(runningSum == k) count ++;
-            for(int j=i+1; j<n; j++){
-                runningSum += nums[j];
-                if(runningSum == k ) count ++;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int ans = 0;
+        map.put(0,1);
+        int runningSum = 0;
+        for(int num : nums){
+            runningSum += num;
+            int curr = runningSum - k;
+            if(map.containsKey(curr)){
+                ans += map.get(curr);
             }
+            map.put(runningSum, map.getOrDefault(runningSum, 0) + 1);
         }
-        return count;
+        return ans;
     }
 }
