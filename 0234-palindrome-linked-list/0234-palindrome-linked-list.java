@@ -17,13 +17,12 @@ class Solution {
             fast = fast.next.next;
         }
         left.next = null;
-        ListNode next = slow.next;
+        ListNode next;
         while(slow != null){
+            next = slow.next;
             slow.next = prev;
             prev = slow;
             slow = next;
-            if(slow == null) break;
-             next = next.next;
         }
         // now compare between prev and head
         while(prev != null && head != null){
