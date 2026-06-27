@@ -1,26 +1,30 @@
 class Solution {
-    class Info{
-        char ch;
-        int freq;
-        public Info(char ch, int freq){
-            this.ch = ch;
-            this.freq = freq;
-        }
-    }
+    
+    
     public String frequencySort(String s) {
-        HashMap<Character,Integer> map = new HashMap<>();
-        PriorityQueue<Info> pq = new PriorityQueue<>((a,b)->b.freq - a.freq);
+        List<Character>[] bucket = new ArrayList[s.length() + 1];
+        int[] arr = new int[128];
         StringBuilder sb = new StringBuilder("");
         for(int i=0; i<s.length(); i++){
-            char ch = s.charAt(i);
-            map.put(ch, map.getOrDefault(ch, 0) + 1);
+            char curr = s.charAt(i);
+            arr[curr]++;
         }
-        for(char key : map.keySet()){
-            pq.add(new Info(key, map.get(key)));
+        for(int i =0; i<128; i++){
+            int freq = arr[i];
+            if(freq > 0){
+if(bucket[freq] == null) bucket[freq] = new ArrayList<>();
+            bucket[freq].add((char) i);
+            }
+            
         }
-        while(!pq.isEmpty()){
-            Info curr = pq.remove();
-            for(int i=0; i<curr.freq; i++) sb.append(curr.ch);
+        for(int i=bucket.length-1; i>= 0; i--){
+            List<Character> curr = bucket[i];
+            if(curr != null){
+                for(char val : curr){
+                    for(int j=0; j<i; j++)
+                    sb.append(val);
+                }
+             }
         }
         return sb.toString();
     }
