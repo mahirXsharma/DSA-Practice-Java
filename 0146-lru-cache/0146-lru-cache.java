@@ -50,11 +50,10 @@ class LRUCache {
     }
     
     public void put(int key, int value) {
-        Node newNode = new Node(key, value, null, null);
         if(map.containsKey(key)){
             // replace the current node;
             Node curr = map.get(key);
-            curr.value = newNode.value;
+            curr.value = value;
             // since this node was accesses, make it head
             if(curr != head){
                 if(curr == tail){
@@ -79,6 +78,8 @@ class LRUCache {
         }
         // lets assume there is no double entry case
         else{
+            Node newNode = new Node(key, value, null, null);
+
             if(head == null){
                 head = newNode;
                 tail = newNode;
@@ -93,12 +94,10 @@ class LRUCache {
                 // tail.prev = newNode;
                 // tail = newNode;
             }
-        }
-        
-        if(!map.containsKey(key)){
             map.put(key, newNode);
             n++;
-        }     
+        }
+   
         if(n == N+1){
             // remove the one currently on tail
             map.remove(tail.key);
