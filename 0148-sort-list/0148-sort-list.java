@@ -11,22 +11,17 @@
 class Solution {
     public ListNode sortList(ListNode head) {
         if(head == null || head.next == null) return head;
-        ListNode temp = head;
-        while (temp.next != null) {
-            temp = temp.next;
-        }
-        ListNode newHead = mergeSort(head, temp);
-        return newHead;
+        return mergeSort(head);
     }
 
-    public ListNode mergeSort(ListNode head,ListNode tail){
-        if(head == tail) return head;
-        ListNode mid = midFinder(head, tail);
+    public ListNode mergeSort(ListNode head){
+        if(head.next == null) return head;
+        ListNode mid = midFinder(head);
         // we have to save the mid.next;
         ListNode save = mid.next;
         mid.next = null;
-        ListNode leftHead = mergeSort(head, mid);
-        ListNode rightHead = mergeSort(save, tail);
+        ListNode leftHead = mergeSort(head);
+        ListNode rightHead = mergeSort(save);
         // finding tail of left
         return merge(leftHead, rightHead);
     }
@@ -67,8 +62,7 @@ class Solution {
         return head;
     }
 
-    public ListNode midFinder(ListNode head, ListNode tail){
-        
+    public ListNode midFinder(ListNode head){
         ListNode slow =  head;
         ListNode fast = head.next;
         while(fast != null && fast.next != null){
