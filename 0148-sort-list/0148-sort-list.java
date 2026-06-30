@@ -49,15 +49,13 @@ class Solution {
                 lh = lh.next;
             }
         }
-        while(lh != null){
+        if(lh != null){
             temp.next = lh;
             temp = lh;
-            lh = lh.next;
         }
-        while(rh != null){
+        if(rh != null){
             temp.next = rh;
             temp = rh;
-            rh = rh.next;
         }
         return head;
     }
