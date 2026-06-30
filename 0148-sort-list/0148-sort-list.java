@@ -53,7 +53,7 @@ class Solution {
             temp.next = lh;
             temp = lh;
         }
-        if(rh != null){
+        else{
             temp.next = rh;
             temp = rh;
         }
