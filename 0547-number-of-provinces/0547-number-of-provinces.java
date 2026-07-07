@@ -11,7 +11,7 @@ class Solution {
         for (int i = 0; i < n; i++) {
             for(int j=i+1; j<n; j++){
                 int curr = isConnected[i][j];
-                if(curr == 1 && i != j){
+                if(curr == 1 ){
                     boolean didMerge = union(i, j, parent);
                     if(didMerge) ans--;
                 }
