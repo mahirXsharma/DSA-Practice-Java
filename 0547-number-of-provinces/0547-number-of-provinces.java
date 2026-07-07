@@ -1,26 +1,38 @@
 class Solution {
     public int findCircleNum(int[][] isConnected) {
         int n = isConnected.length;
-        int ans = 0;
-        boolean visited[] = new boolean[n];
-        Queue<Integer> q = new ArrayDeque<>();
-        
+        int parent[] = new int[n];
+        int ans = n;
+
+        for(int i=0; i<n; i++){
+            parent[i] = i;
+        }
+
         for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                q.add(i);
-                while (!q.isEmpty()) {
-                    int curr = q.poll();
-                    for (int j = 0; j < n; j++) {
-                        if (isConnected[curr][j] == 1 && !visited[j]) {
-                            visited[j] = true;
-                            q.add(j);
-                        }
-                    }
+            for(int j=0; j<n; j++){
+                int curr = isConnected[i][j];
+                if(curr == 1 && i != j){
+                    boolean didMerge = union(i, j, parent);
+                    if(didMerge) ans--;
                 }
-                ans++;
             }
         }
+        return ans;
+    }
+    
+    public boolean union(int x, int y, int parent[]){
+        int rootX = find(parent, x);
+        int rootY = find(parent, y);
+        if(rootX == rootY) return false;
+        parent[rootX] = rootY;
+        return true;
+    }
+
+    public int find(int parent[], int node){
+        int father = parent[node];
+        if(father == node) return father;
+        int ans = find(parent, father);
+        parent[node] = ans;
         return ans;
     }
 }
