@@ -3,24 +3,14 @@ class Solution {
         int m = grid.length, n = grid[0].length;
         int dirs[][] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
         Queue<int[]> q = new ArrayDeque<>();
+        // Just loop the whole board once
         for (int i = 0; i < m; i++) {
-            if (grid[i][0] == 1) {
-                q.add(new int[] { i, 0 });
-                grid[i][0] = 2;
-            }
-            if (grid[i][n - 1] == 1) {
-                q.add(new int[] { i, n - 1 });
-                grid[i][n - 1] = 2;
-            }
-        }
-        for (int j = 0; j < n; j++) {
-            if (grid[0][j] == 1) {
-                q.add(new int[] { 0, j });
-                grid[0][j] = 2;
-            }
-            if (grid[m - 1][j] == 1) {
-                q.add(new int[] { m - 1, j });
-                grid[m - 1][j] = 2;
+            for (int j = 0; j < n; j++) {
+                // Is this cell on the border AND is it a 1?
+                if ((i == 0 || i == m - 1 || j == 0 || j == n - 1) && grid[i][j] == 1) {
+                    q.add(new int[] { i, j });
+                    grid[i][j] = 2; // Marked immediately, safely inside brackets!
+                }
             }
         }
         while (!q.isEmpty()) {
