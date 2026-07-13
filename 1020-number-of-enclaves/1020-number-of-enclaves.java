@@ -21,11 +21,10 @@ class Solution {
     }
     // i, j, grid, m, n
     public void dfs(int i, int j, int grid[][], int dirs[][], int m, int n){
-        int r = i, c = j;
         grid[i][j] = 2;
         for(int dir[] : dirs){
-            int nextR = r + dir[0];
-            int nextC = c + dir[1];
+            int nextR = i + dir[0];
+            int nextC = j + dir[1];
             if(nextR < m && nextR >= 0 && nextC < n && nextC >=0){
                 if(grid[nextR][nextC] == 1) dfs(nextR, nextC, grid, dirs, m, n);
             }
