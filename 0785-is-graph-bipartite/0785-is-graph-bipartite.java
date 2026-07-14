@@ -11,14 +11,11 @@ class Solution {
                     int curr = q.poll();
                     int[] bros = graph[curr];
                     for (int bro : bros) {
-                        if (arr[bro] == 0) {
+                        if(arr[bro] == arr[curr]) return false;
+                        if(arr[bro]==0) {
                             arr[bro] = -arr[curr];
                             q.add(bro);
-                        } else {
-                            if (arr[bro] == arr[curr])
-                                return false;
                         }
-
                     }
                 }
             }
