@@ -3,7 +3,7 @@ class Solution {
         int n = graph.length;
         boolean pathVis[] =  new boolean[n]; 
         boolean redRope[] = new boolean[n];
-        List<Integer> ans = new LinkedList<>();
+        List<Integer> ans = new ArrayList<>();
         for(int i=0; i<n; i++){
             if(!pathVis[i]) dfs(graph, pathVis, redRope, i);
         }
