@@ -23,9 +23,7 @@ class Solution {
                 if(degree[num] == 0) q.add(num);
             }
         }
-        for(int num : degree){
-            if(num != 0) return false;
-        }
+        for(int num : degree) if(num != 0) return false;
         return true;
     }
 }
