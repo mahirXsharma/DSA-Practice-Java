@@ -1,24 +1,17 @@
 class Solution {
     public String reverseWords(String s) {
-        Deque<Character> stack = new ArrayDeque<>();
-        StringBuilder sb = new StringBuilder("");
-        for(char ch : s.toCharArray()){
-            if(stack.isEmpty() && ch == ' ') continue;
-            if(ch == ' ' && stack.peek() == ' ') continue;
-            stack.push(ch);
-        }
-        while(!stack.isEmpty()){
-            if(stack.peek() == ' ' && sb.isEmpty()){
-                stack.pop();
-                continue;
+        // 1. Trim outer spaces, then split by ONE OR MORE spaces
+        String[] words = s.trim().split("\\s+");
+        
+        // 2. Build the new string backwards
+        StringBuilder sb = new StringBuilder();
+        for (int i = words.length - 1; i >= 0; i--) {
+            sb.append(words[i]);
+            if (i > 0) {
+                sb.append(" "); // Add a single space between words
             }
-            sb.append(stack.pop());
         }
-        String arr[] = sb.toString().split(" ");
-        for(int i=0; i<arr.length; i++){
-            arr[i] = new StringBuilder(arr[i]).reverse().toString();
-        }
-        String ans = String.join(" ", arr);
-        return ans;
+        
+        return sb.toString();
     }
 }
