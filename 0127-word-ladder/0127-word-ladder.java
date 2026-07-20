@@ -14,7 +14,7 @@ class Solution {
                 if(curr.equals(endWord)) return ans;
                 for(int j=0; j<listSize; j++){
                     String currString = wordList.get(j);
-                    if(differ(curr, currString) && !set.contains(currString)){
+                    if(!set.contains(currString) && differ(curr, currString)){
                         set.add(currString);
                         q.add(currString);
                     }
