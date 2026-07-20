@@ -3,6 +3,7 @@ class Solution {
         Queue<String> q = new ArrayDeque<>();
         int listSize = wordList.size();
         HashSet<String> set = new HashSet<>();
+        for(int i=0; i <listSize; i++) set.add(wordList.get(i));
         q.add(beginWord);
         set.add(beginWord);
         int ans = 0;
@@ -12,13 +13,19 @@ class Solution {
             for(int i=0; i<size; i++){
                 String curr = q.poll();
                 if(curr.equals(endWord)) return ans;
-                for(int j=0; j<listSize; j++){
-                    String currString = wordList.get(j);
-                    if(!set.contains(currString) && differ(curr, currString)){
-                        set.add(currString);
-                        q.add(currString);
+                
+                for(int j=0; j<curr.length(); j++){
+                    for(char ch = 'a'; ch <= 'z'; ch++){
+                        StringBuilder sb = new StringBuilder(curr);
+                        sb.setCharAt(j, ch);
+                        String newString = sb.toString();
+                        if(set.contains(newString)){
+                            q.add(newString);
+                            set.remove(newString);
+                        }
                     }
                 }
+
             }
         }
         return 0;
