@@ -13,19 +13,20 @@ class Solution {
             for(int i=0; i<size; i++){
                 String curr = q.poll();
                 if(curr.equals(endWord)) return ans;
-                
+                char arr[] = curr.toCharArray();
                 for(int j=0; j<curr.length(); j++){
+                    char original = arr[j];
                     for(char ch = 'a'; ch <= 'z'; ch++){
-                        StringBuilder sb = new StringBuilder(curr);
-                        sb.setCharAt(j, ch);
-                        String newString = sb.toString();
+                        if(arr[j] == ch) continue;
+                        arr[j] = ch;
+                        String newString = new String(arr);
                         if(set.contains(newString)){
                             q.add(newString);
                             set.remove(newString);
                         }
                     }
+                    arr[j] = original;
                 }
-
             }
         }
         return 0;
