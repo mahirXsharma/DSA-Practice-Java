@@ -1,35 +1,47 @@
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        if (dst == src)
+            return 0;
         ArrayList<ArrayList<int[]>> arr = new ArrayList<>();
-        int memo[][] = new int[n][k+2];
-        for(int[] row : memo) {
-            Arrays.fill(row, Integer.MAX_VALUE);
-        }
-        for(int i=0; i<n; i++){
+        for (int i = 0; i < n; i++) {
             arr.add(new ArrayList<>());
         }
-        for(int curr[] : flights){
-            arr.get(curr[0]).add(new int[]{curr[1], curr[2]});
+        for (int curr[] : flights) {
+            arr.get(curr[0]).add(new int[] { curr[1], curr[2] });
         }
-        int ans = 0, minCost = Integer.MAX_VALUE;
-        return dfs(arr, k, ans, src, dst, minCost, memo);
-    }
-    public int dfs(ArrayList<ArrayList<int[]>> arr, int k, int ans, int src, int dst, int minCost, int memo[][]){
-        if(k < 0) return -1;
-        if (ans >= memo[src][k + 1]) {
-            return -1; 
-        }
-        memo[src][k+1] = ans;
-        for(int[] curr : arr.get(src)){
-            if(curr[0] == dst){
-                minCost = Math.min(ans + curr[1], minCost);
+        int dist[] = new int[n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[src] = 0;
+
+        Queue<int[]> q = new ArrayDeque<>();
+        q.add(new int[] { 0, src, 0 }); // {current_stops, current_Node, current_cost}
+
+        while (!q.isEmpty()) {
+            int curr[] = q.poll();
+            int currentStops = curr[0];
+            int currentNode = curr[1];
+            int currentCost = curr[2];
+
+            // Bouncer 1: Did we exceed our allowed stops?
+            if (currentStops > k)
                 continue;
-            }
-            int result = dfs(arr, k-1, ans + curr[1], curr[0], dst, minCost, memo);
-            if(result != -1){
-                minCost = Math.min(result, minCost);
+
+            for (int bro[] : arr.get(currentNode)) {
+                int neighborNode = bro[0];
+                int priceToNeighbor = bro[1];
+
+                int newCost = currentCost + priceToNeighbor;
+
+                // Bouncer 2: Is this new route cheaper than our previous record for this city?
+                if (newCost < dist[neighborNode]) {
+                    dist[neighborNode] = newCost; // Update the record book!
+                    q.add(new int[] { currentStops + 1, neighborNode, newCost });
+                }
             }
         }
-        return minCost == Integer.MAX_VALUE ? -1 : minCost;
+
+        // After the queue is completely empty, the dist array holds our absolute lowest prices.
+        return dist[dst] == Integer.MAX_VALUE ? -1 : dist[dst];
+
     }
 }
