@@ -21,7 +21,6 @@ class Solution {
             int currNode = curr[0];
             int currCost = curr[1];
 
-            // If we popped a stale, slower path from the queue, ignore it!
             if (currCost > dist[currNode]) continue;
 
             for (int[] bro : arr.get(currNode)) {
