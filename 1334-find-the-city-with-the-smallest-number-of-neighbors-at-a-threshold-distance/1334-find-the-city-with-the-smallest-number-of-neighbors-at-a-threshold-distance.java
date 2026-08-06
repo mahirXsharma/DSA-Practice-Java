@@ -18,12 +18,11 @@ class Solution {
         // floyd warshall 
         for(int via = 0; via < n; via++){
             for(int i=0; i<n; i++){
+                if(ans[i][via] == -1) continue;
                 for(int j=0; j<n; j++){
-                    if(ans[i][via] != -1 && ans[via][j] != -1){
+                    if(ans[via][j] != -1){
                         int newDist = ans[i][via] + ans[via][j];
-                            if(ans[i][j] == -1 || newDist < ans[i][j]){
-                            ans[i][j] = newDist;
-                        }
+                        if(ans[i][j] == -1 || newDist < ans[i][j]) ans[i][j] = newDist;
                     }
                 }
             }
