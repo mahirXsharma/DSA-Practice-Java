@@ -1,47 +1,46 @@
 class Solution {
     public int findTheCity(int n, int[][] edges, int distanceThreshold) {
-        int ans[][] = new int[n][n];
-        for(int[] row : ans){
-            Arrays.fill(row, -1);
+        // In this question, it is guaranteed, that there will be -ve edge 
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[1]-b[1]);
+        int dist[][] = new int[n][n];
+        for(int[] row : dist){
+            Arrays.fill(row, Integer.MAX_VALUE);
         }
-        // filling the right diagonal with 0's
+        ArrayList<ArrayList<int[]>> arr = new ArrayList<>();
         for(int i=0; i<n; i++){
-            ans[i][i] = 0;
+            arr.add(new ArrayList<>());
         }
-
         for(int edge[] : edges){
-            int curr = edge[0], nextNode = edge[1], dist = edge[2];
-            ans[curr][nextNode] = dist;
-            ans[nextNode][curr] = dist;
+            arr.get(edge[0]).add(new int[]{edge[1], edge[2]});
+            arr.get(edge[1]).add(new int[]{edge[0], edge[2]});
         }
-
-        // floyd warshall 
-        for(int via = 0; via < n; via++){
-            for(int i=0; i<n; i++){
-                if(ans[i][via] == -1) continue;
-                for(int j=0; j<n; j++){
-                    if(ans[via][j] != -1){
-                        int newDist = ans[i][via] + ans[via][j];
-                        if(ans[i][j] == -1 || newDist < ans[i][j]) ans[i][j] = newDist;
+        for(int i=0; i<n; i++){
+            pq.add(new int[]{i, 0});
+            // dist[i][i] IS ZERO !
+            dist[i][i] = 0;
+            while(!pq.isEmpty()){
+                int curr[] = pq.poll();
+                int currNode = curr[0],  currCost = curr[1];
+                for(int bro[] : arr.get(currNode)){
+                    int nextNode = bro[0], nextCost = bro[1] + currCost;
+                    if(nextCost < dist[i][nextNode]){
+                        dist[i][nextNode] = nextCost;
+                        pq.add(new int[]{nextNode, nextCost});
                     }
-                }
+                } 
             }
-        }
-        int currNode = -1, prevCount =101;
-
-        for(int i=0; i<n; i++){   
-            int currCount = 0;         
+        } 
+         int prev = 101, currNode = -1;
+        for(int i=0; i<n; i++){
+            int ans = 0;
             for(int j=0; j<n; j++){
-                int curr = ans[i][j];
-                if(curr != -1 && curr!= 0 && curr <= distanceThreshold){
-                    currCount++;
-                }
+                if(dist[i][j] <= distanceThreshold) ans ++;
             }
-            if(currCount <= prevCount){
+            if(ans <= prev){
+                prev = ans;
                 currNode = i;
-                prevCount = currCount;
             }
         }
         return currNode;
-    }
+    }  
 }
