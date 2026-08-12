@@ -39,12 +39,21 @@ class Solution {
     public int removeStones(int[][] stones) {
         int n = stones.length;
         Disjoint ds = new Disjoint(n);
+        HashMap<Integer, Integer> rowMap = new HashMap<>();
+        HashMap<Integer, Integer> colMap = new HashMap<>();
         for(int i=0; i<n; i++){
-            for(int j=i+1; j<n; j++){
-                if(stones[i][0] == stones[j][0] || stones[i][1] == stones[j][1]){
-                    ds.union(i, j);
-                }
+            int currRow = stones[i][0];
+            int currCol = stones[i][1];
+            if(rowMap.containsKey(currRow)){
+                int curr = rowMap.get(currRow);
+                ds.union(curr, i);
             }
+            if(colMap.containsKey(currCol)){
+                int curr = colMap.get(currCol);
+                ds.union(curr, i);
+            }
+            rowMap.put(currRow, i);
+            colMap.put(currCol, i);
         }
         int iso = 0;
         for(int i=0; i<n; i++){
