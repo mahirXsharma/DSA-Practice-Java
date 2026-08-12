@@ -48,7 +48,7 @@ class Solution {
         }
         int iso = 0;
         for(int i=0; i<n; i++){
-            if(i == ds.parent[i]) iso++;
+            if(i == ds.findPar(i)) iso++;
         }
         return n -iso;
     }
