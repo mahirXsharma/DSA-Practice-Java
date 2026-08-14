@@ -68,13 +68,15 @@ class Solution {
             }            
         }
         // Flipping the zeros
+
+        HashSet<Integer> uniqueBosses = new HashSet<>();
         for (int i=0; i<n; i++) {
             int curr[] = grid[i];
             for(int j=0; j<curr.length; j++){
                 int currCor = i * n + j;
                 if(grid[i][j] == 0){
                     int currAns = 1;
-                    HashSet<Integer> uniqueBosses = new HashSet<>();
+                    uniqueBosses.clear();
                     for(int dir[] : dirs){
                         int nextR = i + dir[0], nextC = j + dir[1];
                         if(nextR >=0 && nextR < n && nextC < n && nextC >=0){
