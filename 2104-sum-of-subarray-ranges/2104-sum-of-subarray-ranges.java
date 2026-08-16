@@ -11,7 +11,7 @@ class Solution {
         // 1. Find Left Boundaries for Minimums
         Arrays.fill(leftMin, -1);
         for(int i = 0; i < n; i++) {
-            while(!s.isEmpty() && nums[s.peek()] >= nums[i]) s.pop();
+            while(!s.isEmpty() && nums[s.peek()] > nums[i]) s.pop();
             if(!s.isEmpty()) leftMin[i] = s.peek();
             s.push(i);
         }
@@ -20,7 +20,7 @@ class Solution {
         s.clear();
         Arrays.fill(rightMin, n);
         for(int i = 0; i < n; i++) {
-            while(!s.isEmpty() && nums[s.peek()] >= nums[i]) rightMin[s.pop()] = i;
+            while(!s.isEmpty() && nums[s.peek()] > nums[i]) rightMin[s.pop()] = i;
             s.push(i);
         }
         
@@ -28,7 +28,7 @@ class Solution {
         s.clear();
         Arrays.fill(leftMax, -1);
         for(int i = 0; i < n; i++) {
-            while(!s.isEmpty() && nums[s.peek()] <= nums[i]) s.pop();
+            while(!s.isEmpty() && nums[s.peek()] < nums[i]) s.pop();
             if(!s.isEmpty()) leftMax[i] = s.peek();
             s.push(i);
         }
@@ -37,7 +37,7 @@ class Solution {
         s.clear();
         Arrays.fill(rightMax, n);
         for(int i = 0; i < n; i++) {
-            while(!s.isEmpty() && nums[s.peek()] <= nums[i]) rightMax[s.pop()] = i;
+            while(!s.isEmpty() && nums[s.peek()] < nums[i]) rightMax[s.pop()] = i;
             s.push(i);
         }
         
