@@ -15,12 +15,13 @@ class Solution {
                 }
         }
         ans.add(new int[]{curr[0], curr[1]});
-        int finalAns[][] = new int[ans.size()][2];
-        for(int i=0; i<ans.size(); i++){
-            int newcurr[] = ans.get(i);
-            finalAns[i][0] = newcurr[0];
-            finalAns[i][1] = newcurr[1];
-        }
-        return finalAns;
+        return ans.toArray(new int[ans.size()][]);
+        // int finalAns[][] = new int[ans.size()][2];
+        // for(int i=0; i<ans.size(); i++){
+        //     int newcurr[] = ans.get(i);
+        //     finalAns[i][0] = newcurr[0];
+        //     finalAns[i][1] = newcurr[1];
+        // }
+        // return finalAns;
     }
 }
