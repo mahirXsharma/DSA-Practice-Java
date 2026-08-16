@@ -8,12 +8,12 @@ class Solution {
         Arrays.sort(s, (a,b)->
             (b+a).compareTo(a+b)
         );
+        if(s[0].equals("0")) return "0";
         StringBuilder sb = new StringBuilder();
         for(String curr : s){
             sb.append(curr);
         }
         String res = sb.toString();
-        if(res.charAt(0) == '0') return "0";
         return res;
     }
 }
