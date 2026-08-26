@@ -9,14 +9,21 @@ class Solution {
         // return dfs(nums, 0, dp);
 
         // TABULATION
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[0], nums[1]);
+        // dp[0] = nums[0];
+        // dp[1] = Math.max(nums[0], nums[1]);
+
+        // optimizing space
+        int first = nums[0];
+        int sec = Math.max(nums[0], nums[1]);
+        int ans = 0;
         for(int i=2; i<n; i++){
-            int loot = nums[i] + dp[i-2];
-            int skip = dp[i-1];
-            dp[i] = Math.max(loot, skip);
+            int loot = nums[i] + first;
+            int skip = sec;
+            ans = Math.max(loot, skip);
+            first = sec;
+            sec = ans;
         }
-        return dp[n-1];
+        return sec;
     }
     public int dfs(int nums[], int i, int dp[]){
         int n = nums.length;
