@@ -3,6 +3,9 @@ class Solution {
         int m = grid.length, n = grid[0].length;
         int dp[][] = new int[m][n];
         return dfs(grid, 0, 0, m, n, dp);
+        // TABULATION
+
+
     }
     public int dfs(int grid[][] , int i, int j, int m, int n, int dp[][]){
         if(i == m-1 && j == n-1) return grid[i][j];
