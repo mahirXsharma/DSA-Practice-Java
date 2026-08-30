@@ -3,6 +3,8 @@ class Solution {
         int n = nums.length;
         int ts = 0;
         for(int num : nums) ts+= num;
+        // 1. THE ODD TRAP: Instantly kill impossible targets
+        if (ts % 2 != 0) return false;
         Boolean dp[][] = new Boolean[ts+1][n];
 
         return dfs(nums, ts, 0, 0, dp);
