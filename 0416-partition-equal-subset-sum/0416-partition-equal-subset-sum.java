@@ -3,18 +3,18 @@ class Solution {
         int n = nums.length;
         int ts = 0;
         for(int num : nums) ts+= num;
-        // 1. THE ODD TRAP: Instantly kill impossible targets
         if (ts % 2 != 0) return false;
-        Boolean dp[][] = new Boolean[ts+1][n];
+        int target = ts/2;
+        Boolean dp[][] = new Boolean[target+1][n];
 
-        return dfs(nums, ts, 0, 0, dp);
+        return dfs(nums, target, 0, 0, dp);
     }
-    public boolean dfs(int nums[], int ts, int curr, int idx, Boolean dp[][]){
-        if(ts - curr == curr) return true;
-        if(curr >= ts || idx >= nums.length) return false;
+    public boolean dfs(int nums[], int target, int curr, int idx, Boolean dp[][]){
+        if(curr == target) return true;
+        if(curr > target || idx >= nums.length) return false;
         if(dp[curr][idx] != null) return dp[curr][idx];
-        boolean take = dfs(nums, ts, curr + nums[idx], idx+1, dp);
-        boolean leave = dfs(nums, ts, curr, idx+1, dp);
+        boolean take = dfs(nums, target, curr + nums[idx], idx+1, dp);
+        boolean leave = dfs(nums, target, curr, idx+1, dp);
         return dp[curr][idx] = take || leave;
     }
 }
