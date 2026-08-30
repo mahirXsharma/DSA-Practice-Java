@@ -13,8 +13,10 @@ class Solution {
         if(curr == target) return true;
         if(curr > target || idx >= nums.length) return false;
         if(dp[curr][idx] != null) return dp[curr][idx];
-        boolean take = dfs(nums, target, curr + nums[idx], idx+1, dp);
-        boolean leave = dfs(nums, target, curr, idx+1, dp);
-        return dp[curr][idx] = take || leave;
+        // If 'take' is true, it completely skips calculating 'leave'!
+        boolean ans = dfs(nums, target, curr + nums[idx], idx+1, dp) || 
+                    dfs(nums, target, curr, idx+1, dp);
+
+        return dp[curr][idx] = ans;
     }
 }
