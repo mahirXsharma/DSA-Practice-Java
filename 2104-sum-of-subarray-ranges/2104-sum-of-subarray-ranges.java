@@ -7,51 +7,65 @@ class Solution {
         int[] rightMax = new int[n];
         
         Deque<Integer> s = new ArrayDeque<>();
-        
-        // 1. Find Left Boundaries for Minimums
-        Arrays.fill(leftMin, -1);
-        for(int i = 0; i < n; i++) {
-            while(!s.isEmpty() && nums[s.peek()] > nums[i]) s.pop();
-            if(!s.isEmpty()) leftMin[i] = s.peek();
+        // right Max
+        for(int i=n-1; i>= 0; i--){
+            int curr = nums[i];
+            while(!s.isEmpty() && curr >= nums[s.peek()]){
+                s.pop();
+            }
+            rightMax[i] = s.isEmpty() ? n : s.peek();
             s.push(i);
         }
-        
-        // 2. Find Right Boundaries for Minimums
+        // right Min
         s.clear();
-        Arrays.fill(rightMin, n);
-        for(int i = 0; i < n; i++) {
-            while(!s.isEmpty() && nums[s.peek()] > nums[i]) rightMin[s.pop()] = i;
+        for(int i=n-1; i>= 0; i--){
+            int curr = nums[i];
+            while(!s.isEmpty() && curr <= nums[s.peek()]){
+                s.pop();
+            }
+            rightMin[i] = s.isEmpty() ? n : s.peek();
             s.push(i);
         }
-        
-        // 3. Find Left Boundaries for Maximums
+        // leftMax
         s.clear();
-        Arrays.fill(leftMax, -1);
-        for(int i = 0; i < n; i++) {
-            while(!s.isEmpty() && nums[s.peek()] < nums[i]) s.pop();
-            if(!s.isEmpty()) leftMax[i] = s.peek();
+        for(int i=0; i<n; i++){
+            int curr = nums[i];
+            while(!s.isEmpty() && curr > nums[s.peek()]){
+                s.pop();
+            }
+            leftMax[i] = s.isEmpty() ? -1 : s.peek();
             s.push(i);
         }
-        
-        // 4. Find Right Boundaries for Maximums
         s.clear();
-        Arrays.fill(rightMax, n);
-        for(int i = 0; i < n; i++) {
-            while(!s.isEmpty() && nums[s.peek()] < nums[i]) rightMax[s.pop()] = i;
+        // left Min
+        for(int i=0; i<n; i++){
+            int curr = nums[i];
+            while(!s.isEmpty() && curr < nums[s.peek()]){
+                s.pop();
+            }
+            leftMin[i] = s.isEmpty() ? -1 : s.peek();
             s.push(i);
         }
-        
-        // 5. Calculate Final Math using the Index Spans
-        long sum = 0;
-        for(int i = 0; i < n; i++) {
-            // (long) cast prevents massive index multiplication from overflowing
-            long minSpan = (long)(i - leftMin[i]) * (rightMin[i] - i);
-            long maxSpan = (long)(i - leftMax[i]) * (rightMax[i] - i);
+        long totalMax = 0;
+        long totalMin = 0;
+        for(int i=0; i<n; i++){
+            // max choices
+            long rightMaxchoice = rightMax[i] - i;
+            long leftMaxchoice = i - leftMax[i];
+            long totalmaxchoices = rightMaxchoice * leftMaxchoice;
+            totalMax += totalmaxchoices * nums[i];
+
+            // min choices
+            long leftMinchoice = i - leftMin[i];
+            long rightMinchoice = rightMin[i] - i;
+            long totalMinchoices = leftMinchoice * rightMinchoice;
+            totalMin += totalMinchoices * nums[i];
             
-            // Add the max contribution, subtract the min contribution
-            sum += (maxSpan - minSpan) * nums[i];
         }
+
+        return totalMax - totalMin;
+
         
-        return sum;
+        
     }
 }
