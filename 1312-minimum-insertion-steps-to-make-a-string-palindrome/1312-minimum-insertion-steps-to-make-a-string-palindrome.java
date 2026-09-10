@@ -1,6 +1,6 @@
 class Solution {
     public int minInsertions(String s) {
-        String s2 = new StringBuilder(s).reverse().toString();
+        // String s2 = new StringBuilder(s).reverse().toString();
         int n = s.length();
         int dp[][] = new int[n][n];
         for(int row[] : dp) Arrays.fill(row, -1);
@@ -32,6 +32,6 @@ class Solution {
             int right = dfs(p1, p2-1, s1, s2, dp);
             ans = Math.max(left, right);
         }
-        return dp[p1][p2] = ans;
+        return dp[p1][p2] =ans;
     }
 }
