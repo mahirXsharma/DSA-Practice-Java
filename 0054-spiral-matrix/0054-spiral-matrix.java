@@ -13,11 +13,12 @@ class Solution {
                 ans.add(matrix[i][rb]);
             }
             rb--;
-            if(ub > bb || lb > rb) break;
+            if(ub > bb ) break;
             for(int j=rb; j>=lb; j--){
                 ans.add(matrix[bb][j]);
             }
             bb--;
+            if(lb > rb) break;
             for(int i=bb; i>=ub; i--){
                 ans.add(matrix[i][lb]);
             }
