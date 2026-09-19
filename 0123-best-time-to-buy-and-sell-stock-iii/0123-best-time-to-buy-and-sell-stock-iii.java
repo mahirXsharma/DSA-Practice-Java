@@ -1,12 +1,17 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        Integer[][][] dp = new Integer[2][3][prices.length];
+        int[][][] dp = new int[2][3][prices.length];
+        for (int[][] matrix : dp) {
+            for (int[] row : matrix) {
+                Arrays.fill(row, -1);
+            }
+        }
         return dfs(prices, 0, 0, 0, prices.length, dp);
     }
 
-    public int dfs(int prices[], int isHolding, int tc, int idx, int n, Integer dp[][][]){
+    public int dfs(int prices[], int isHolding, int tc, int idx, int n, int dp[][][]){
         if(tc == 2 || idx == n) return 0;
-        if(dp[isHolding][tc][idx] != null) return dp[isHolding][tc][idx];
+        if(dp[isHolding][tc][idx] != -1) return dp[isHolding][tc][idx];
         int skip = 0;
         int trans = 0;
         if(isHolding == 1){
