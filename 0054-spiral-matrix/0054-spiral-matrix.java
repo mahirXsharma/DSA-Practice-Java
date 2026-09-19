@@ -1,31 +1,28 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        int m = matrix.length, n = matrix[0].length;
         List<Integer> ans = new ArrayList<>();
-        int ub = 0, lb = 0, rb = n-1, bb = m-1;
-            while(ub <= bb && lb <= rb){
-                for(int i = lb; i<= rb; i++){
-                    ans.add(matrix[ub][i]);
-                }
-                ub++;
-                for(int i=ub; i<= bb; i++){
-                    ans.add(matrix[i][rb]);
-                }
-                rb--;
-                if(ub <= bb){
-                    for(int i=rb; i>= lb; i--){
-                        ans.add(matrix[bb][i]);
-                    }
-                    bb--;
-                }
-                if(lb <= rb){
-                    for(int i=bb; i>= ub; i--){
-                        ans.add(matrix[i][lb]);
-                    }
-                    lb++;
-                }
-                
+
+        int ub = 0, bb = matrix.length-1;
+        int lb = 0, rb = matrix[0].length-1;
+        while(ub <= bb && lb <= rb){
+            for(int j=lb; j<=rb; j++){
+                ans.add(matrix[ub][j]);
             }
-            return ans;
+            ub++;
+            for(int i=ub; i<=bb; i++){
+                ans.add(matrix[i][rb]);
+            }
+            rb--;
+            if(ub > bb || lb > rb) break;
+            for(int j=rb; j>=lb; j--){
+                ans.add(matrix[bb][j]);
+            }
+            bb--;
+            for(int i=bb; i>=ub; i--){
+                ans.add(matrix[i][lb]);
+            }
+            lb++;
+        }
+        return ans;
     }
 }
