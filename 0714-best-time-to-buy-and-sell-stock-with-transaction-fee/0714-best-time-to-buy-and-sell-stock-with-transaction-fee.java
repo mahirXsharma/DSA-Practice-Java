@@ -1,29 +1,28 @@
 class Solution {
     public int maxProfit(int[] prices, int fee) {
         int n = prices.length;
-        int dp[][] = new int[n+1][2];
+        // int dp[][] = new int[n+1][2];
+        int aheadNo = 0, aheadYes = 0; 
         // for(int row[] : dp) Arrays.fill(row, -1);
         // return dfs(prices, fee, 0, 0, dp);
 
         // TABULATION
-        for(int i=n-1; i>=0; i--){
-            for(int k=0; k<=1; k++){
-                int ans = 0;
-                if(k == 0){
-                    int buy = -prices[i] + dp[i+1][1];
-                    int leave = dp[i+1][0];
-                     ans = Math.max(buy, leave);
-                }
-                else{
-                    int sell = prices[i] - fee + dp[i+1][0];
-                    int hold = dp[i+1][1];
-                    ans = Math.max(ans, Math.max(sell, hold));
-                }
-                dp[i][k] = ans;
-            }
+        for (int i = n - 1; i >= 0; i--) {
+            // State 1: We currently don't hold a stock. 
+            // Options: Do nothing (aheadNo) OR Buy today (-prices[i] + aheadYes)
+            int currNo = Math.max(aheadNo, -prices[i] + aheadYes);
+            
+            // State 2: We currently hold a stock.
+            // Options: Do nothing (aheadYes) OR Sell today (prices[i] - fee + aheadNo)
+            int currYes = Math.max(aheadYes, prices[i] - fee + aheadNo);
+            
+            // Move our pointers back one day for the next loop iteration
+            aheadNo = currNo;
+            aheadYes = currYes;
         }
-        return dp[0][0];
-
+        
+        // We start on day 0 not holding any stock, so this holds our maximum possible profit
+        return aheadNo;
     }
 
     // public int dfs(int prices[], int fee, int idx, int isHolding, int dp[][]){
