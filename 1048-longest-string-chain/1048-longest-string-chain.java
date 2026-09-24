@@ -1,39 +1,25 @@
 class Solution {
     public int longestStrChain(String[] words) {
-        int n = words.length, ans = 1;
-        int dp[] = new int[n];
-        Arrays.fill(dp, 1);
-        Arrays.sort(words, (a,b)->a.length()-b.length());
+        Arrays.sort(words, (a, b)->a.length()-b.length());
+        HashMap<String, Integer> dp = new HashMap<>();
+        int maxLength = 1;
+        for(String word : words){
+            // for ever word, chop its characters one by one
+            int currMax = 1;
+            for(int i=0; i<word.length(); i++){
+                StringBuilder sb = new StringBuilder(word);
+                sb.deleteCharAt(i);
+                String pred = sb.toString();
 
-        for(int i=1; i<n; i++){
-            for(int j=0; j<i; j++){
-                if(words[i].length() != words[j].length() + 1) continue;
-                if(dfs(words[i], words[j] ) && dp[j] + 1 > dp[i]){
-                    dp[i] = dp[j] + 1;
+                if(dp.containsKey(pred)){
+                    currMax = Math.max(currMax, dp.get(pred) + 1);
                 }
             }
-            if(dp[i] > ans){
-                ans = dp[i];
-            }
-        }
-        return ans;
-    }
 
-    public boolean dfs(String s1, String s2){
-        int count =0, i=0, j=0;
-        while(i < s1.length() && j<s2.length()){
-            if(count > 1) return false;
-            if(s1.charAt(i) == s2.charAt(j)){
-                i++;
-                j++;
-            }
-            else{
-                i++;
-                count++;
-            }
+            dp.put(word, currMax);
+            maxLength = Math.max(maxLength, currMax);
         }
 
-        return j == s2.length();
+        return maxLength;
     }
-
 }
