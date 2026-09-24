@@ -1,10 +1,10 @@
 class Solution {
     public int longestStrChain(String[] words) {
-        int n = words.length;
+        int n = words.length, ans = 1;
         int dp[] = new int[n];
         Arrays.fill(dp, 1);
-        int ans = 1;
         Arrays.sort(words, (a,b)->a.length()-b.length());
+
         for(int i=1; i<n; i++){
             for(int j=0; j<i; j++){
                 if(words[i].length() != words[j].length() + 1) continue;
@@ -16,7 +16,6 @@ class Solution {
                 ans = dp[i];
             }
         }
-        
         return ans;
     }
 
