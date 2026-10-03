@@ -3,11 +3,26 @@ class Solution {
         int n = nums.length;
         int arr[] = new int[n + 2];
         int dp[][] = new int[n+2][n+2];
-        for(int row[] : dp) Arrays.fill(row, -1);
+        // for(int row[] : dp) Arrays.fill(row, -1);
         for(int i=0; i<n; i++)arr[i+1] = nums[i];
         arr[0]=1;
         arr[arr.length-1] = 1;
-        return dfs(1, n, arr, dp);
+        // return dfs(1, n, arr, dp);
+
+        // TABULATION
+        for(int i=n; i>=1; i--){
+            for(int j=i; j<n+1; j++){
+                int ans = Integer.MIN_VALUE;
+                for(int k=i; k<= j; k++){
+                    // taking k to be the last guy
+                    int cc = arr[k] * arr[i-1] * arr[j+1] + dp[i][k-1] + 
+                    dp[k+1][j];
+                    ans = Math.max(ans, cc);
+                }
+                dp[i][j] = ans;
+            }
+        }
+        return dp[1][n];
     }
 
     public int dfs(int i, int j, int arr[], int dp[][]){
