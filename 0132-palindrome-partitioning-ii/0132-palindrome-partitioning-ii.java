@@ -2,22 +2,40 @@ class Solution {
     public int minCut(String s) {
         int n = s.length();
         int dp[] = new int[n];
-        Arrays.fill(dp, -1);
-        return dfs(s, 0, dp);     
-    }
+        // Arrays.fill(dp, -1);
+        // return dfs(s, 0, dp);     
+        if(isPalindrome(0, n-1, s)) return 0;
+        for(int i=n-1; i>=0; i--){
+            if (isPalindrome(i, n - 1, s)) {
+                dp[i] = 0;
+                continue;
+            }
 
-    public int dfs(String s, int i, int dp[]){
-        if(i == s.length()-1 || isPalindrome(i, s.length()-1, s)) return 0;
-        if(dp[i] != -1) return dp[i];
+            int ans = Integer.MAX_VALUE;
 
-        int ans = Integer.MAX_VALUE;
-        for(int k=i; k<s.length()-1; k++){
-            if(!isPalindrome(i, k, s)) continue;
-            int curr = dfs(s, k+1, dp) + 1;
-            if(curr < ans) ans = curr;
+            for(int k=i; k<n-1; k++){
+                if(!isPalindrome(i, k, s)) continue;
+
+                int curr = dp[k+1] + 1;
+                if(curr < ans) ans = curr;
+            }
+            dp[i] = ans;
         }
-        return dp[i] = ans;
+        return dp[0];
     }
+
+    // public int dfs(String s, int i, int dp[]){
+    //     if(i == s.length()-1 || isPalindrome(i, s.length()-1, s)) return 0;
+    //     if(dp[i] != -1) return dp[i];
+
+    //     int ans = Integer.MAX_VALUE;
+    //     for(int k=i; k<s.length()-1; k++){
+    //         if(!isPalindrome(i, k, s)) continue;
+    //         int curr = dfs(s, k+1, dp) + 1;
+    //         if(curr < ans) ans = curr;
+    //     }
+    //     return dp[i] = ans;
+    // }
 
     public boolean isPalindrome(int i, int j, String s){
         while(i <= j){
