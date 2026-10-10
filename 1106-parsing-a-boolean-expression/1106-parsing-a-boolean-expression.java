@@ -17,9 +17,13 @@ class Solution {
                 s.pop();// pop the (
                 // find the operator
                 char opr = s.pop();
-                if(opr == '&' && onef) exp = false;
-                else if(opr == '|' && !onet ) exp = false;
-                else if(opr == '!' && onet) exp = false;
+                if (opr == '&') {
+                    exp = !onef; 
+                } else if (opr == '|') {
+                    exp = onet;
+                } else if (opr == '!') {
+                    exp = !onet;
+                }
                 char charpush = exp == true ? 't' : 'f';
                 s.push(charpush);
             }
