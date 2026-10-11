@@ -19,7 +19,7 @@ class Solution {
                 int curr = dp[row][j];
                 if(curr == 0) continue;
                 int min = curr;
-                while(curr != 0 && row >= 0){
+                while(min > 0 && row >= 0){
                     min = Math.min(min, dp[row][j]);
                     ans += min;
                     row--;
