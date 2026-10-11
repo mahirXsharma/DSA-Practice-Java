@@ -48,7 +48,7 @@ class Solution {
         int ans = 0;
         int[] sum = new int[n];  // sum[i] = number of rectangles ending at i
 
-        Stack<Integer> st = new Stack<>();
+        Deque<Integer> st = new ArrayDeque<>();
 
         for (int i = 0; i < n; i++) {
             while (!st.isEmpty() && arr[st.peek()] >= arr[i]) {
