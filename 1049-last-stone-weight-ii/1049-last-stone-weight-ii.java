@@ -8,7 +8,7 @@ class Solution {
 
         int dp[][] = new int[n][target+1];
         for(int row[] : dp) Arrays.fill(row, -1);
-        int maxSum = dfs(0, 0, target, stones, dp);
+        int maxSum = target - dfs(0, target, stones, dp);
 
         return ts-(2*maxSum);
 
@@ -42,14 +42,15 @@ class Solution {
         // return ts-2*maxSumOfPileA;
     }
 
-    public int dfs(int idx, int currSum, int target, int stones[], int dp[][]){
-        if(currSum > target ) return 0;
-        if( idx >= stones.length || currSum == target) return currSum;
-        if(dp[idx][currSum] != -1) return dp[idx][currSum];
-        int leave = dfs(idx+1, currSum, target, stones, dp);
-        int take = dfs(idx+1, currSum + stones[idx], target, stones, dp);
-        return dp[idx][currSum] = Math.max(leave, take);
-
-
+    public int dfs(int i, int rem, int stones[], int dp[][]){
+        if(rem == 0 ) return 0;
+        if( i >= stones.length) return rem;
+        if(dp[i][rem] != -1) return dp[i][rem];
+        int leave = dfs(i+1, rem, stones, dp);
+        int take = Integer.MAX_VALUE;
+        if (stones[i] <= rem) { // Protect against negative remainder
+            take = dfs(i + 1, rem - stones[i], stones, dp);
+        }
+        return dp[i][rem] = Math.min(leave, take);
     }
 }
