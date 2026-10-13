@@ -27,7 +27,7 @@ class Solution {
             bottomRow = currRow.clone();
 
         }
-        int lcs = bottomRow[0];
+        int lcs = currRow[0];
 
 
         return n - lcs;
