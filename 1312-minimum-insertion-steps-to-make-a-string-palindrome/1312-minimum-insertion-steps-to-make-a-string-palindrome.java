@@ -2,30 +2,32 @@ class Solution {
     public int minInsertions(String s) {
         int n = s.length();
         String rev = new StringBuilder(s).reverse().toString();
-        int dp[][] = new int[n+1][n+1];
+        // int dp[][] = new int[n+1][n+1];
         // for(int row[] : dp) Arrays.fill(row, -1);
         // int lcs = dfs(0, 0, s, rev, dp);
+        int bottomRow[] = new int[n+1];
+        int currRow[] = new int[n+1];
 
 
         // TABULATION
         for(int i=n-1; i>=0; i--){
             for(int j=n-1; j>=0; j--){
-                int ans =0;
+                // int ans =0;
                 if(s.charAt(i) == rev.charAt(j)){
-                    int curr = dp[i+1][j+1]+1;
-                    ans = curr;
+                    currRow[j] = bottomRow[j+1]+1;
+                    // ans = curr;
                 }
                 else{
-                    int left = dp[i+1][j];
-                    int right = dp[i][j+1];
-                    ans = Math.max(left, right);
+                    int left = bottomRow[j];
+                    int right = currRow[j+1];
+                    currRow[j] = Math.max(left, right);
                 }
-                dp[i][j] = ans;
+                // dp[i][j] = ans;
             }
+            bottomRow = currRow.clone();
+
         }
-        int lcs = dp[0][0];
-
-
+        int lcs = bottomRow[0];
 
 
         return n - lcs;
