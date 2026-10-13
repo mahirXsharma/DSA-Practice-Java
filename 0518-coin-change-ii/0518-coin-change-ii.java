@@ -4,11 +4,11 @@ class Solution {
         int dp[][] = new int[n+1][amount+1];
         // for(int row[] : dp) Arrays.fill(row, -1);
         // return dfs(0, amount, coins, dp);
-        for(int i=0; i<n; i++) dp[i][0] = 1;
+        for(int i=0; i<=n; i++) dp[i][0] = 1;
         // TABULATION
 
         for(int i=n-1; i>=0; i--){
-            for(int rem = 1; rem<=amount; rem++){
+            for(int rem = 0; rem<=amount; rem++){
                 int take = 0;
                 if(rem >= coins[i]){
                     take = dp[i][rem-coins[i]];
