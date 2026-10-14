@@ -4,13 +4,13 @@ class Solution {
         boolean dp[] = new boolean[n+1];
         dp[n] = true;
         // return dfs(0, s, wordDict, memo);
-
-        // TABULATION
+        HashSet<String> set = new HashSet<>(wordDict);
+        // TABULATION   
         for(int i=n-1; i>=0; i--){
             StringBuilder sb = new StringBuilder();
             for(int idx = i; idx<n; idx++){
                 sb.append(s.charAt(idx));
-                if(wordDict.contains(sb.toString())){
+                if(set.contains(sb.toString())){
                     if(dp[idx+1]) {
                         dp[i] = true;
                         break;
