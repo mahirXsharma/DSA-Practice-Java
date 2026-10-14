@@ -10,11 +10,9 @@ class Solution {
             StringBuilder sb = new StringBuilder();
             for(int idx = i; idx<n; idx++){
                 sb.append(s.charAt(idx));
-                if(set.contains(sb.toString())){
-                    if(dp[idx+1]) {
+                if(dp[idx+1] && set.contains(sb.toString())){
                         dp[i] = true;
                         break;
-                    }
                 }
             }
         }
