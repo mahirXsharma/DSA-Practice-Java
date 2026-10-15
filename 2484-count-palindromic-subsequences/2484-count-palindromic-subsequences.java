@@ -3,13 +3,14 @@ class Solution {
 
     public int countPalindromes(String s) {
         int n = s.length();
+        int dp[][] = new int[n][5];
+
         if (n < 5)
             return 0;
         int ans = 0;
 
         for (char x = '0'; x <= '9'; x++) {
             for (char y = '0'; y <= '9'; y++) {
-                int dp[][] = new int[n][5];
                 for (int row[] : dp)
                     Arrays.fill(row, -1);
                 ans = (ans + dfs(0, 0, x, y, s, dp)) % mod;
