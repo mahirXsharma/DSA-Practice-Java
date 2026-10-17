@@ -14,6 +14,6 @@ class Solution {
                 si = mid+1;
             }
         }
-        return (int)ans;
+        return ans;
     }
 }
