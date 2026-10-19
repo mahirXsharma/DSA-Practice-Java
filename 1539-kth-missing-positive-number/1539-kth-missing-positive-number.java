@@ -11,6 +11,7 @@ class Solution {
             }
             curr++;
         }
+        if(mis == -1) return arr[n-1] + k;
         return curr + k-1;
     }
 }
