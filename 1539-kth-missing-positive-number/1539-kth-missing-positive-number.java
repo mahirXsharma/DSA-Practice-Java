@@ -4,17 +4,13 @@ class Solution {
         int i=0;
         while(i< n){
             if(k == 0) return mis;
-            if(curr == arr[i]){
-                i++;
-                curr++;
-            }
+            else if(curr == arr[i]) i++;
             else{
                 mis = curr;
-                curr++;
                 k--;
             }
+            curr++;
         }
-        if(mis == -1) return arr[n-1] + k;
         return curr + k-1;
     }
 }
