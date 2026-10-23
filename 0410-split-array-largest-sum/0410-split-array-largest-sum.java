@@ -1,38 +1,34 @@
 class Solution {
     public int splitArray(int[] nums, int k) {
-        int max = 0, ts = 0;
+        int max = 0, cs = 0;
         for(int num : nums){
-            ts += num;
+            cs += num;
             if(num > max) max = num;
         }
-        int si = max, ei = ts;
+
+        int si = max, ei = cs;
         int ans = 0;
-        while( si <= ei){
+        while(si <= ei){
             int mid = (si + (ei -si)/2);
-            int dn = help(mid, nums);
-
-            if(dn >= k){
-                si = mid+1;
-            }
-            else{
-            ans = mid;
-
+            int patitionsNeeded = help(mid, nums);
+            if( patitionsNeeded <= k){
+                ans = mid;
                 ei = mid-1;
             }
+            else si = mid+1;
         }
         return ans;
     }
 
-    public int help(int curr, int nums[]){
-        int cs = 0;
-        int dn = 0;
+    public int help(int mid, int nums[]){
+        int pN = 1, cs = 0;
         for(int num : nums){
             cs += num;
-            if(cs > curr){
-                dn ++;
+            if(cs > mid){
+                pN++;
                 cs = num;
             }
         }
-        return dn;
+        return pN;
     }
 }
