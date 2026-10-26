@@ -1,28 +1,31 @@
 class Solution {
-    int dirs[][] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
-
     public int[] findPeakGrid(int[][] mat) {
         int n = mat.length, m = mat[0].length;
+        int si = 0, ei = m-1;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                int curr = mat[i][j];
-                boolean isPossible = help(mat, curr, i, j);
-                if(isPossible) return new int[]{i, j};
-            }
+        while(si <= ei){
+            int mid = (si + (ei - si)/2);
+            int idx[] = help(mat, mid);
+            int r = idx[0], c = idx[1], val = mat[r][c];
+
+            int left = c == 0 ? -1 : mat[r][c-1];
+            int right = c == m-1 ? -1 : mat[r][c+1];
+
+            if(val > left && val > right) return idx;
+            else if(left > val) ei = mid-1;
+            else si = mid+1;
         }
         return new int[]{-1, -1};
     }
 
-    public boolean help(int mat[][], int curr, int i, int j) {
-        for (int dir[] : dirs) {
-            int r = i + dir[0], c = j + dir[1];
-            if (r >= 0 && c >= 0 && r < mat.length && c < mat[0].length) {
-                int val = mat[r][c];
-                if (curr < val)
-                    return false;
+    public int[] help(int mat[][], int col){
+        int r = -1, max = Integer.MIN_VALUE;
+        for(int i=0; i<mat.length; i++){
+            if(mat[i][col] > max){
+                max = mat[i][col];
+                r = i;
             }
-        }
-        return true;
+        } 
+        return new int[]{r, col};
     }
 }
