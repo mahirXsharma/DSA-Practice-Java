@@ -2,6 +2,6 @@
 SELECT * 
 FROM Cinema c
 WHERE c.id %2 != 0
-AND description NOT LIKE 'boring'
+AND description != 'boring'
 ORDER BY c.rating DESC
 ;
