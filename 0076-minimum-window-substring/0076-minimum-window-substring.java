@@ -18,22 +18,19 @@ class Solution {
             arr[curr]--;
 
             while (match == n && l < m) {
-                char atLeft = s.charAt(l);
-                if (arr[atLeft] == 0)
-                    break;
-                else {
-                    arr[atLeft]++;
-                    l++;
-                }
-            }
-            if (match == n) {
-                int currlen = r - l+1;
+                int currlen = r - l + 1;
                 if (currlen < ans) {
                     ans = currlen;
                     right = r;
                     left = l;
                 }
+                char atLeft = s.charAt(l);
+                if (arr[atLeft] == 0)
+                    match--;
+                arr[atLeft]++;
+                l++;
             }
+
             r++;
         }
         return ans == Integer.MAX_VALUE ? "" : s.substring(left, right + 1);
