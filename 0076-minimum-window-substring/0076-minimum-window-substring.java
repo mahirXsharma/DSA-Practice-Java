@@ -27,7 +27,7 @@ class Solution {
                 }
             }
             if (match == n) {
-                int currlen = r - l;
+                int currlen = r - l+1;
                 if (currlen < ans) {
                     ans = currlen;
                     right = r;
