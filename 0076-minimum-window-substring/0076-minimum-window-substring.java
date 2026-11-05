@@ -6,7 +6,7 @@ class Solution {
         }
         for (int i = 0; i < 128; i++) {
             if (arr[i] == 0)
-                arr[i] = -(int) 1e9;
+                arr[i] = -1;
         }
 
         int l = 0, r = 0, ans = Integer.MAX_VALUE, match = 0;
