@@ -2,11 +2,11 @@ class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         // 10^4 -> N2 would barely Work, try for N or NlogN
         int n = strs.length;
-        List<List<String>> ans = new ArrayList<>();
         HashMap<String, List<String>> map = new HashMap<>();
-    
+        // n * klogK
         for(int i=0; i<n; i++){
             char[] arr = strs[i].toCharArray();
+            // klogk
             Arrays.sort(arr);
             String s = new String(arr);
             if(map.containsKey(s)){
@@ -18,9 +18,8 @@ class Solution {
                 map.put(s, new ArrayList<>( List.of(strs[i]) ));
             }
         }
-        for(String key : map.keySet()){
-            ans.add(map.get(key));
-        }
+        List<List<String>> ans = new ArrayList<>( map.values() );
+
         return ans;
     }
 }
