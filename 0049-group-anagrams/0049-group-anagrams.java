@@ -12,7 +12,6 @@ class Solution {
             if(map.containsKey(s)){
                 List<String> curr = map.get(s);
                 curr.add(strs[i]);
-                map.put(s, curr);
             }
             else{
                 map.put(s, new ArrayList<>( List.of(strs[i]) ));
