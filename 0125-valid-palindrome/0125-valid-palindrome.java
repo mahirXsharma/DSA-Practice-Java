@@ -1,21 +1,25 @@
 class Solution {
     public boolean isPalindrome(String s) {
-        int i=0, j=s.length()-1;
-        String lower = s.toLowerCase();
-        while(i<j){
-            char left = lower.charAt(i);
-            char right = lower.charAt(j);
-            if(!Character.isLetterOrDigit(left)){
-                i++;
-                continue;
+        int n = s.length();
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<n; i++){
+            char curr = s.charAt(i);
+            if(Character.isLetterOrDigit(curr)){
+                sb.append(Character.toLowerCase(curr));
             }
-            if( !Character.isLetterOrDigit(right) ){
-                j--;
-                continue;
-            }
-            if(left != right) return false;
-            i++;
-            j--;
+        }
+        // its a perfectString
+        String str = sb.toString();
+        return aPalindrome(str);
+    }
+
+    public boolean aPalindrome(String s){
+        int n = s.length();
+        int left = 0, right = n-1;
+        while( left < right){
+            if(s.charAt(left) != s.charAt(right)) return false;
+            left++;
+            right--;
         }
         return true;
     }
