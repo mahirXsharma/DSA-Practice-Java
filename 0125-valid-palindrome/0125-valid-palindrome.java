@@ -1,25 +1,20 @@
 class Solution {
     public boolean isPalindrome(String s) {
-        int n = s.length();
-        StringBuilder sb = new StringBuilder();
-        for(int i=0; i<n; i++){
-            char curr = s.charAt(i);
-            if(Character.isLetterOrDigit(curr)){
-                sb.append(Character.toLowerCase(curr));
-            }
-        }
-        // its a perfectString
-        String str = sb.toString();
-        return aPalindrome(str);
-    }
+        // n-> 10^5 => N
+        int n = s.length(), left = 0, right = n-1;
 
-    public boolean aPalindrome(String s){
-        int n = s.length();
-        int left = 0, right = n-1;
-        while( left < right){
-            if(s.charAt(left) != s.charAt(right)) return false;
-            left++;
-            right--;
+        while(left < right){
+            char l = s.charAt(left);
+            char r = s.charAt(right);
+
+            if(!Character.isLetterOrDigit(l)) left++;
+            else if(!Character.isLetterOrDigit(r)) right--;
+            else{
+                if(Character.toLowerCase(l) != Character.toLowerCase(r)) return false;
+                left++;
+                right--;
+            }
+
         }
         return true;
     }
