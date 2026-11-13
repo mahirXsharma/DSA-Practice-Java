@@ -1,11 +1,15 @@
 class Solution {
     public int maxSubArray(int[] nums) {
-        int ans = Integer.MIN_VALUE, curr =  0;
+        // n = 10^5 -> N only
+        // what if the question wants us to return that 'subarray' instead of the sum ? 
+        // kadan algo
+        int sum = 0, ans = Integer.MIN_VALUE;
         for(int num : nums){
-            curr += num;
-            ans = Math.max(ans, curr);
-            if(curr < 0) curr = 0;
+            sum += num;
+            ans = Math.max(ans, sum);
+            if(sum < 0) sum = 0;
         }
         return ans;
+
     }
 }
