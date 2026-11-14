@@ -13,28 +13,31 @@ class MyQueue {
     public void push(int x) {
         size++;
         // get back the data in s1
-        while(!s2.isEmpty()){
-            s1.push(s2.pop());
-        }
+
         s1.push(x);
     }
     
     public int pop() {
         // get the data in s2
-        while(!s1.isEmpty()){
-            s2.push(s1.pop());
+        if(s2.isEmpty()){
+            while(!s1.isEmpty()){
+                s2.push(s1.pop());
+            }
         }
         if(s2.isEmpty()) return -1;
-        else{
+        else {
+            int val = s2.pop();
             size--;
-            return s2.pop();
+            return val;
         }
     }
     
     public int peek() {
         // get the data back in s2
-        while(!s1.isEmpty()){
-            s2.push(s1.pop());
+        if(s2.isEmpty()){
+            while(!s1.isEmpty()){
+                s2.push(s1.pop());
+            }
         }
         return s2.isEmpty() ? -1 : s2.peek();
     }
