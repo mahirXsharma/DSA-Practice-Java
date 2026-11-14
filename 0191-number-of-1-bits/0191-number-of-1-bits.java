@@ -6,7 +6,7 @@ class Solution {
         while(n != 0){
             int mask = n & 1;
             if(mask == 1) count++;
-            n = n >> 1;
+            n = n >>> 1;
         }
         return count;
 
