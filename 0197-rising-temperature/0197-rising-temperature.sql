@@ -1,5 +1,7 @@
-SELECT today.id
-FROM weather AS today
-JOIN weather AS yesterday
-ON today.recordDate - yesterday.recordDate = 1
-WHERE today.temperature > yesterday.temperature
+-- Write your PostgreSQL query statement below
+SELECT tw.id 
+FROM Weather tw
+INNER JOIN Weather yw
+ON tw.recordDate - yw.recordDate = 1
+WHERE tw.temperature > yw.temperature 
+;
