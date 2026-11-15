@@ -2,6 +2,6 @@
 SELECT tw.id 
 FROM Weather tw
 INNER JOIN Weather yw
-ON tw.recordDate - yw.recordDate = 1
+ON tw.recordDate = yw.recordDate + INTERVAL '1day'
 WHERE tw.temperature > yw.temperature 
 ;
