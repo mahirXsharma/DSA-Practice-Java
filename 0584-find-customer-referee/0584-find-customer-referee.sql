@@ -1,3 +1,5 @@
 -- Write your PostgreSQL query statement below
-SELECT name FROM customer
-WHERE referee_id IS null OR referee_id != 2
+SELECT name
+FROM Customer AS c
+WHERE referee_id IS NULL OR referee_id != 2
+;
