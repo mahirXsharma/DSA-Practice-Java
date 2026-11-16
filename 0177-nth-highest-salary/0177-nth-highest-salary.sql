@@ -4,11 +4,11 @@ BEGIN
     -- Write your PostgreSQL query statement below.
     SELECT MAX(ranked.salary)
     FROM (
-        SELECT e.salary, DENSE_RANK() OVER (ORDER BY e.salary DESC) AS rnk
-        FROM Employee AS e
+        SELECT DENSE_RANK() OVER (ORDER BY e.salary DESC) AS rnk, e.salary
+        FROM Employee e
     ) AS ranked
     WHERE ranked.rnk = N
-
+      
   );
 END;
 $$ LANGUAGE plpgsql;
