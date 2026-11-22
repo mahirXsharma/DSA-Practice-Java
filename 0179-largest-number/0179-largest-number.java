@@ -1,19 +1,21 @@
 class Solution {
     public String largestNumber(int[] nums) {
+        // n -> 10^2 => Brute force N2 will work
+        // the fight is between the numbers that differ by a tens digit
         int n = nums.length;
-        String[] s = new String[n];
-        for(int i=0; i<n; i++){
-            s[i] = String.valueOf(nums[i]);
-        }
-        Arrays.sort(s, (a,b)->
-            (b+a).compareTo(a+b)
-        );
-        if(s[0].equals("0")) return "0";
+        String arr[] = new String[n];
+
+        for(int i=0; i<n; i++) arr[i] = String.valueOf(nums[i]);
+        
+
+        Arrays.sort(arr, (a,b) -> (b+a).compareTo(a+b));
+        if(arr[0].equals("0")) return "0";
         StringBuilder sb = new StringBuilder();
-        for(String curr : s){
-            sb.append(curr);
+        for(int i=0; i<n; i++){
+            sb.append(arr[i]);
         }
-        String res = sb.toString();
-        return res;
+
+        return sb.toString();
+
     }
 }
