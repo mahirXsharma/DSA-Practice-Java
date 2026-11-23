@@ -1,32 +1,29 @@
 class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        // n -> 100 => easy N2 or Recursion
-        Arrays.sort(candidates);
         List<List<Integer>> ans = new ArrayList<>();
-        List<Integer> curr = new ArrayList<>();
-
-        dfs(candidates, target, 0, curr, ans);
+        List<Integer> l = new ArrayList<>();
+        Arrays.sort(candidates);
+        dfs(candidates, target, 0, ans, l, candidates.length);
         return ans;
     }
 
-    public void dfs(int nums[], int tar, int idx, List<Integer> curr, List<List<Integer>> ans) {
-        if (tar == 0) {
+    public void dfs(int nums[], int tar, int idx, List<List<Integer>> ans, List<Integer> curr, int n){
+        if(tar == 0){
+            // snapshot
             ans.add(new ArrayList<>(curr));
             return;
         }
-        if (idx == nums.length)
-            return;
+        if(idx == n) return;
 
-        int num = nums[idx];
-
-        // take only if the tar doesnt' go -ve
-        if (tar - num >= 0) {
-            curr.add(num);
-            dfs(nums, tar - num, idx + 1, curr, ans);
+        // take only if its valid
+        if(tar - nums[idx] >= 0){
+            curr.add(nums[idx]);
+            dfs(nums, tar - nums[idx], idx+1, ans, curr, n);
             curr.remove(curr.size() - 1);
         }
-        while(idx+1 < nums.length && nums[idx] == nums[idx+1]) idx++;
-
-        dfs(nums, tar, idx + 1, curr, ans);
+        // leave, but skip if its the same
+        while(idx +1 < n && nums[idx] == nums[idx+1]) idx++;
+        
+        dfs(nums, tar, idx +1, ans, curr, n);
     }
 }
