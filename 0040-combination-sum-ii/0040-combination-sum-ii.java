@@ -1,29 +1,30 @@
 class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        List<List<Integer>> ans = new ArrayList<>();
-        List<Integer> l = new ArrayList<>();
+        // recursion + "only used once"
         Arrays.sort(candidates);
-        dfs(candidates, target, 0, ans, l, candidates.length);
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        dfs(0, candidates, target, ans, list);
         return ans;
     }
 
-    public void dfs(int nums[], int tar, int idx, List<List<Integer>> ans, List<Integer> curr, int n){
+    public void dfs(int idx, int nums[], int tar, List<List<Integer>> ans, List<Integer> curr){
         if(tar == 0){
-            // snapshot
+            // found a valid answer
             ans.add(new ArrayList<>(curr));
             return;
         }
-        if(idx == n) return;
+        if(idx >= nums.length) return;
 
-        // take only if its valid
+        // take or leave
         if(tar - nums[idx] >= 0){
             curr.add(nums[idx]);
-            dfs(nums, tar - nums[idx], idx+1, ans, curr, n);
+            dfs(idx+1, nums, tar - nums[idx], ans, curr);
             curr.remove(curr.size() - 1);
         }
-        // leave, but skip if its the same
-        while(idx +1 < n && nums[idx] == nums[idx+1]) idx++;
-        
-        dfs(nums, tar, idx +1, ans, curr, n);
+
+        // skip all the duplicates
+        while(idx +1 < nums.length && nums[idx] == nums[idx+1])idx++;
+        dfs(idx+1, nums, tar, ans, curr);
     }
 }
