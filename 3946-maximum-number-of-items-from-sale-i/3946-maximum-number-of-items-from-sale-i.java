@@ -2,7 +2,7 @@ class Solution {
     public int maximumSaleItems(int[][] items, int budget) {
         int n = items.length;
         int freeCopies[] = new int[n];
-        int dp[][][] = new int[n][budget+1][2];
+        int dp[][][] = new int[2][n][budget+1];
 
         for(int row[][] : dp){
             for(int deepRow[] : row){
@@ -28,7 +28,7 @@ class Solution {
 
     public int dfs(int items[][], int k, int i, int free[], int n, int dp[][][], int taken){
         if(k == 0 || i == n) return 0;
-        if(dp[i][k][taken] != -1) return dp[i][k][taken];
+        if(dp[taken][i][k] != -1) return dp[taken][i][k];
         // take or leave
         int curr[] = items[i], take = 0, leave = 0;
         if(k - curr[1] >= 0){
@@ -36,6 +36,6 @@ class Solution {
             take = dfs(items, k-curr[1], i, free, n, dp, 1) + 1 + bonus;
         }
         leave = dfs(items, k, i+1, free, n, dp, 0);
-        return dp[i][k][taken] = Math.max(take, leave);
+        return dp[taken][i][k] = Math.max(take, leave);
     }
 }
